@@ -66,8 +66,7 @@ class OccupationController extends Controller
      */
     public function destroy(Occupation $occupation)
     {
-        $group->delete();
-
+        $occupation->delete();
         return response()->json(null, 204);
     }
 }
