@@ -4,9 +4,27 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use JWTAuth; 
 
 class UserController extends Controller
 {
+
+    public function UserAuth(Request $resquest){       
+        $credentials = $resquest->only('email', 'password');       
+        $token = null;
+        try{
+            if(!$token = JWTAuth::attempt($credentials)){
+                return response()->json(['error' => 'invalid_credentials']);
+            }
+        }catch(JWTException $ex){
+            return response()-json(['error' => 'something went wrong!'], 500);
+        }
+        $user = User::where('email',$credentials['email'])->first();
+        //$group = $user->group;
+        return response()->json(compact('token','user'));
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +45,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -57,9 +75,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $id)
+    public function update(Request $request, $usuario)
     {
-        //
+        $arr = User::find(1);
+        $usuario->update($request->all());
+
+        return response()->json($usuario, 200);
     }
 
     /**
