@@ -32,7 +32,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::all();
+         $users = User::all();
+
+        //Retornar todos el grupo del susuario
+        // foreach ($users as $user){
+        //     $user->group->name;
+        // }
+        
+        return $users;
     }
 
     
