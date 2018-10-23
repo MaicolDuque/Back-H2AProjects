@@ -45,7 +45,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $usuario = User::create($request->all());
+        return response()->json($usuario, 201);
     }
 
     /**
@@ -75,12 +76,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $usuario)
+    public function update(Request $request, $idUser)
     {
-        $arr = User::find(1);
-        $usuario->update($request->all());
+        $info = User::findOrFail($idUser)->update($request->all());
+        // $usuario->update($request->all());
 
-        return response()->json($usuario, 200);
+        return response()->json($info, 200);
     }
 
     /**
@@ -91,6 +92,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return response()->json(true, 204);
     }
 }
