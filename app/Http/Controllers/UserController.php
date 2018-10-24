@@ -35,9 +35,9 @@ class UserController extends Controller
          $users = User::all();
 
         //Retornar todos el grupo del susuario
-        // foreach ($users as $user){
-        //     $user->group->name;
-        // }
+        foreach ($users as $user){
+            $user->group->name;
+        }
         
         return $users;
     }
