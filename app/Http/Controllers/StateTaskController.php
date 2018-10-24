@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\StateTask;
+use App\State;
 use Illuminate\Http\Request;
 
-class StateTaskController extends Controller
+class StateController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class StateTaskController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\StateTask  $stateTask
+     * @param  \App\State  $State
      * @return \Illuminate\Http\Response
      */
-    public function show(StateTask $stateTask)
+    public function show(State $State)
     {
         //
     }
@@ -52,10 +52,10 @@ class StateTaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\StateTask  $stateTask
+     * @param  \App\State  $State
      * @return \Illuminate\Http\Response
      */
-    public function edit(StateTask $stateTask)
+    public function edit(State $State)
     {
         //
     }
@@ -64,10 +64,10 @@ class StateTaskController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\StateTask  $stateTask
+     * @param  \App\State  $State
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, StateTask $stateTask)
+    public function update(Request $request, State $State)
     {
         //
     }
@@ -75,10 +75,10 @@ class StateTaskController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\StateTask  $stateTask
+     * @param  \App\State  $State
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StateTask $stateTask)
+    public function destroy(State $State)
     {
         //
     }
