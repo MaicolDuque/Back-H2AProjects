@@ -103,4 +103,15 @@ class UserController extends Controller
         $user->delete();
         return response()->json(true, 204);
     }
+
+    /**
+     * Rerturn every task for user
+     * @param int $id
+     */
+    public function userTasks($id)
+    {
+        $user = User::findOrFail($id);
+        $user->tasks;
+        return response()->json($user, 200);
+    }
 }

@@ -24,5 +24,6 @@ Route::group(['middleware' => 'cors'], function(){
         Route::apiResource('users', 'UserController');
         Route::apiResource('groups', 'GroupController');
         Route::apiResource('occupations', 'OccupationController');
+        Route::get('user_tasks/{id}', 'UserController@userTasks');
     });
 });
