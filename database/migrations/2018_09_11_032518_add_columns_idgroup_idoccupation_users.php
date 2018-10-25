@@ -29,7 +29,8 @@ class AddColumnsIdgroupIdoccupationUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropColumn('group_id');
+            $table->dropColumn('occupation_id');
         });
     }
 }

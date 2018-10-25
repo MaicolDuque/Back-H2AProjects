@@ -23,7 +23,9 @@ class CreateTasksTable extends Migration
             $table->integer("state_id")->unsigned();
             $table->foreign('state_id')->references('id')->on('states');
             $table->integer("section_id")->unsigned();
-            $table->foreign('section_id')->references('id')->on('sections');            
+            $table->foreign('section_id')->references('id')->on('sections'); 
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');            
             $table->datetime("fecha_fin");
             $table->timestamps();
         });
