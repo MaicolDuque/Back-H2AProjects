@@ -112,6 +112,11 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->tasks;
+
+        //Retornar todos el grupo del susuario
+        // foreach ($user->tasks as $task){
+        //     $task->state->name;
+        // }
         return response()->json($user, 200);
     }
 }
