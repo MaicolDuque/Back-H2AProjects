@@ -118,5 +118,6 @@ class UserController extends Controller
         //     $task->state->name;
         // }
         return response()->json($user, 200);
+        
     }
 }
