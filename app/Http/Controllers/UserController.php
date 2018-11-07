@@ -52,7 +52,33 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $usuario = User::create($request->all());
+        //return $request->all();
+
+        //AGREGAR IMAGEN USUARIO
+
+        //Explotar baseg4 de la imagen
+        $exploded = explode(",", $request->picture);
+
+        $decoded = base64_decode($exploded[1]);
+
+        if(str_contains($exploded[0], 'jpeg')){
+            $extension = 'jpg';
+        }else{
+            $extension = 'png';
+        }
+
+        $nombre = str_random().".".$extension;
+
+        $path = public_path()."/uploads/".$nombre;
+
+        file_put_contents($path, $decoded);
+
+
+        
+        $usuario = User::create($request->except('picture') + [
+            'picture' => $nombre
+        ]);
+
         return response()->json($usuario, 201);
     }
 
