@@ -14,7 +14,13 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        $projects = Project::all();
+        // $projects->color;
+         //Retornar todos el grupo del susuario
+         foreach ($projects as $project){
+            $project->color;
+        }
+        return $projects;
     }
 
     /**
@@ -35,7 +41,9 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $project = Project::create($request->all());
+
+        return response()->json($project, 201);
     }
 
     /**
@@ -46,19 +54,10 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        return $project;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Project  $project
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Project $project)
-    {
-        //
-    }
+    
 
     /**
      * Update the specified resource in storage.
@@ -69,7 +68,9 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $project->update($request->all());
+
+        return response()->json($project, 200);
     }
 
     /**
@@ -80,6 +81,8 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $project->delete();
+
+        return response()->json(null, 204);
     }
 }
