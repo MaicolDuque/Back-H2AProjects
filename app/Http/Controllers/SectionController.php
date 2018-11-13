@@ -22,11 +22,16 @@ class SectionController extends Controller
 
     /**
      * @param id es el del projecto de las secciones
-     * 
+     * @return \Illuminate\Http\Response
      */
 
      public function returnSectionsProject($id){
         $sections = Section::where('project_id', $id)->get();
+
+        foreach ($sections as $section){
+            $section->tasks;
+        }
+        // return $sections;
         return response()->json($sections, 200);
      }
 
