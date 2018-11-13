@@ -14,18 +14,24 @@ class SectionController extends Controller
      */
     public function index()
     {
-        //
+        return Section::all();
     }
 
+    
+
+
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param id es el del projecto de las secciones
+     * 
      */
-    public function create()
-    {
-        //
-    }
+
+     public function returnSectionsProject($id){
+        $sections = Section::where('project_id', $id)->get();
+        return response()->json($sections, 200);
+     }
+
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -35,7 +41,9 @@ class SectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $section = Section::create($request->all());
+
+        return response()->json($section, 201);
     }
 
     /**
@@ -46,19 +54,10 @@ class SectionController extends Controller
      */
     public function show(Section $section)
     {
-        //
+        return $section;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Section  $section
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Section $section)
-    {
-        //
-    }
+    
 
     /**
      * Update the specified resource in storage.
@@ -69,7 +68,9 @@ class SectionController extends Controller
      */
     public function update(Request $request, Section $section)
     {
-        //
+        $section->update($request->all());
+
+        return response()->json($section, 200);
     }
 
     /**
@@ -80,6 +81,7 @@ class SectionController extends Controller
      */
     public function destroy(Section $section)
     {
-        //
+        $section->delete();
+        return response()->json(null, 204);
     }
 }
