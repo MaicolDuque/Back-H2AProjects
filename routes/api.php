@@ -30,6 +30,7 @@ Route::group(['middleware' => 'cors'], function(){
 
 
         Route::get('user_tasks/{id}', 'UserController@userTasks');
+        Route::post('users/groups', 'UserController@usersByGroups');
         Route::get('sections_project/{id}', 'SectionController@returnSectionsProject');
     });
 });

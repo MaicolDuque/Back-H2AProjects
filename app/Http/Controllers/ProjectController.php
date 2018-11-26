@@ -17,7 +17,7 @@ class ProjectController extends Controller
         $projects = Project::all();
         // $projects->color;
          //Retornar todos el grupo del susuario
-         foreach ($projects as $project){
+        foreach ($projects as $project){
             $project->color;
         }
         return $projects;
@@ -54,6 +54,10 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        // foreach ($project->groups as $group){
+        //     $group->id;
+        // }
+        $project->groups;
         return $project;
     }
 

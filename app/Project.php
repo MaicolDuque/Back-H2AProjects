@@ -13,6 +13,11 @@ class Project extends Model
         return $this->belongsTo('App\ColorProject');
     }
 
+    public function groups()
+    {
+        return $this->belongsToMany('App\Group', 'group_projects');
+    }
+
     
 
     

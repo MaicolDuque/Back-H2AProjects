@@ -146,4 +146,14 @@ class UserController extends Controller
         return response()->json($user, 200);
         
     }
+
+    /**
+     * return usuarios por grupo
+     */
+
+     public function usersByGroups(Request $request){        
+        $groups = $request->data;
+        $users = User::whereIn('group_id', $groups)->get();
+        return response()->json($users, 200);
+     }
 }
