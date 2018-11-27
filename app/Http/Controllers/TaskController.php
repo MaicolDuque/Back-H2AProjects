@@ -52,6 +52,8 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
+        // return $request;
+        // $request->except('picture')        
         $task->update($request->all());
 
         return response()->json($task, 200);
