@@ -74,9 +74,12 @@ class UserController extends Controller
         file_put_contents($path, $decoded);
 
 
-        
-        $usuario = User::create($request->except('picture') + [
-            'picture' => $nombre
+        // bcrypt()
+        $pass = bcrypt($request->password);        
+
+        $usuario = User::create($request->except('picture', 'password') + [
+            'picture' => $nombre,
+            'password' => $pass
         ]);
 
         return response()->json($usuario, 201);
@@ -111,8 +114,34 @@ class UserController extends Controller
      */
     public function update(Request $request, $idUser)
     {
-        $info = User::findOrFail($idUser)->update($request->all());
+        // return $request;
+        //Explotar baseg4 de la imagen
+        $exploded = explode(",", $request->picture);
+        
+        if(count($exploded)>1){
+            $decoded  = base64_decode($exploded[1]);
+            if(str_contains($exploded[0], 'jpeg')){
+                $extension = 'jpg';
+            }else{
+                $extension = 'png';
+            }
+            $nombre = str_random().".".$extension;
+            $path = public_path()."/uploads/".$nombre;
+            file_put_contents($path, $decoded);
+        }else{
+            $nombre = $request->picture;
+        }
+
+        $pass = bcrypt($request->password);
+        // $request->password = $pass;
+        
+        // return $pass;
+        $info = User::findOrFail($idUser)->update($request->except('picture','password') + [
+            'picture' => $nombre,
+            'password' => $pass
+        ]);
         // $usuario->update($request->all());
+       
 
         return response()->json($info, 200);
     }
