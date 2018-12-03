@@ -52,31 +52,35 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request->all();
+        // return $request->all();
 
         //AGREGAR IMAGEN USUARIO
 
         //Explotar baseg4 de la imagen
         $exploded = explode(",", $request->picture);
 
-        $decoded = base64_decode($exploded[1]);
-
-        if(str_contains($exploded[0], 'jpeg')){
-            $extension = 'jpg';
+        if(count($exploded)>1){
+            $decoded = base64_decode($exploded[1]);
+    
+            if(str_contains($exploded[0], 'jpeg')){
+                $extension = 'jpg';
+            }else{
+                $extension = 'png';
+            }
+    
+            $nombre = str_random().".".$extension;
+    
+            $path = public_path()."/uploads/".$nombre;
+    
+            file_put_contents($path, $decoded);
         }else{
-            $extension = 'png';
+            $nombre = $request->picture;
         }
-
-        $nombre = str_random().".".$extension;
-
-        $path = public_path()."/uploads/".$nombre;
-
-        file_put_contents($path, $decoded);
 
 
         // bcrypt()
         $pass = bcrypt($request->password);        
-
+        // return $pass;
         $usuario = User::create($request->except('picture', 'password') + [
             'picture' => $nombre,
             'password' => $pass
