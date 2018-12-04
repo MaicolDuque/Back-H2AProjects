@@ -14,7 +14,7 @@ class ColorProjectController extends Controller
      */
     public function index()
     {
-        //
+        return ColorProject::all();
     }
 
     /**
