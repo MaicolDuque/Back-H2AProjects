@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
+date_default_timezone_set('America/Bogota');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

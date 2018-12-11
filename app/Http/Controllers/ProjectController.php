@@ -19,6 +19,7 @@ class ProjectController extends Controller
          //Retornar todos el grupo del susuario
         foreach ($projects as $project){
             $project->color;
+            $project->groups;
         }
         return $projects;
     }
@@ -41,8 +42,10 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $project = Project::create($request->all());
-
+        $groups = $request->groups;
+        $infoProject = $request->content;        
+        $project = Project::create(['name' => $infoProject["name"], 'description' => $infoProject["description"], 'color_id' => $infoProject["color"]['id'], 'updated_at' => date('Y-m-d H:i:s'), 'created_at' => date('Y-m-d H:i:s')]);
+        $project->groups()->attach($groups, ['updated_at' => date('Y-m-d H:i:s'), 'created_at' => date('Y-m-d H:i:s')]);  //Ingresar los nuevos grupos relacionados al proyecto
         return response()->json($project, 201);
     }
 
@@ -72,8 +75,13 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        $project->update($request->all());
+        $groups = $request->groups;
+        $infoProject = $request->content;
+        // return $infoProject;
 
+        $project->update(['name' => $infoProject["name"], 'description' => $infoProject["description"], 'color_id' => $infoProject["color"]['id']]);
+        $project->groups()->detach(); // Eliminar todos los grupos relacionados al proyecto
+        $project->groups()->attach($groups, ['updated_at' => date('Y-m-d H:i:s')]);  //Ingresar los nuevos grupos relacionados al proyecto
         return response()->json($project, 200);
     }
 
