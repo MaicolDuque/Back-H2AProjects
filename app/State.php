@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class State extends Model
 {
-    public function task(){
-        return $this->belongsTo('App\Task');
+    protected $fillable = [
+        'name', 'description', 'created_at', 'updated_at'
+    ];
+    public function tasks(){
+        return $this->hasMany('App\Task');
     }
 }

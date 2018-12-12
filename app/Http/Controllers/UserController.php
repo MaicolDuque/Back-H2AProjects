@@ -10,7 +10,9 @@ class UserController extends Controller
 {
 
     public function UserAuth(Request $resquest){       
-        $credentials = $resquest->only('email', 'password');       
+        $credentials = $resquest->only('email', 'password'); 
+        // $pass = bcrypt($resquest->password);  
+        // return $pass;
         $token = null;
         try{
             if(!$token = JWTAuth::attempt($credentials)){

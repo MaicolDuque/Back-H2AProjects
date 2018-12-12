@@ -30,6 +30,9 @@ class SectionController extends Controller
 
         foreach ($sections as $section){
             $section->tasks;
+            foreach ($section->tasks as $task) {
+                $task->state;
+            }
         }
         // return $sections;
         return response()->json($sections, 200);

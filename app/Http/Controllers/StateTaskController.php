@@ -13,8 +13,10 @@ class StateController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {        
+        $state = State::all();
+
+        return $state;
     }
 
     /**
