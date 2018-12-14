@@ -34,7 +34,7 @@ class UserController extends Controller
      */
     public function index()
     {
-         $users = User::all();
+        $users = User::all();
 
         //Retornar todos el grupo del susuario
         foreach ($users as $user){
@@ -122,7 +122,11 @@ class UserController extends Controller
     {
         // return $request;
         //Explotar baseg4 de la imagen
-        $exploded = explode(",", $request->picture);
+        $currentPassword = $request->currentPass;
+        $request = $request->info;
+
+        // return $currentPassword;
+        $exploded = explode(",", $request['picture']);
         
         if(count($exploded)>1){
             $decoded  = base64_decode($exploded[1]);
@@ -135,14 +139,24 @@ class UserController extends Controller
             $path = public_path()."/uploads/".$nombre;
             file_put_contents($path, $decoded);
         }else{
-            $nombre = $request->picture;
+            $nombre = $request['picture'];
         }
 
-        $pass = bcrypt($request->password);
+        $pass = $currentPassword;
+        if($currentPassword != $request['password']){
+            $pass = bcrypt($request['password']);
+        }
         // $request->password = $pass;
         
         // return $pass;
-        $info = User::findOrFail($idUser)->update($request->except('picture','password') + [
+        $info = User::findOrFail($idUser)->update([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'group_id' => $request['group_id'],
+            'is_admin' => $request['is_admin'],
+            'occupation_id' => $request['occupation_id'],
+            'state' => $request['state'],
+            'updated_at' => date('Y-m-d H:i:s'),
             'picture' => $nombre,
             'password' => $pass
         ]);
@@ -191,4 +205,21 @@ class UserController extends Controller
         $users = User::whereIn('group_id', $groups)->get();
         return response()->json($users, 200);
      }
+
+
+     /**
+      * return cantidad de usuarios por grupo
+      */
+
+    public function cantUsersByGroup(){   
+        $users = User::groupBy('group_id')
+                    ->selectRaw('count(*) as total, group_id')
+                    ->get();
+
+        foreach ($users as $user) {
+            $user->group;
+        }
+        return response()->json($users, 200);
+     
+    }
 }

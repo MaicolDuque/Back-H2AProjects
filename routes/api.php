@@ -33,7 +33,11 @@ Route::group(['middleware' => 'cors'], function(){
         Route::apiResource('states', 'StateController');
 
         Route::get('user_tasks/{id}', 'UserController@userTasks');
+        Route::get('cant/users/by-group', 'UserController@cantUsersByGroup');
         Route::post('users/groups', 'UserController@usersByGroups');
+
+
+
         Route::get('sections_project/{id}', 'SectionController@returnSectionsProject');
     });
 });
