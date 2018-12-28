@@ -32,6 +32,7 @@ Route::group(['middleware' => 'cors'], function(){
         Route::apiResource('color-projects', 'ColorProjectController');
         Route::apiResource('states', 'StateController');
 
+        Route::get('tasksByGroup/{idGrupo}', 'TaskController@tasksGroup');
         Route::get('user_tasks/{id}', 'UserController@userTasks');
         Route::get('cant/users/by-group', 'UserController@cantUsersByGroup');
         Route::post('users/groups', 'UserController@usersByGroups');
@@ -39,5 +40,7 @@ Route::group(['middleware' => 'cors'], function(){
 
 
         Route::get('sections_project/{id}', 'SectionController@returnSectionsProject');
+        Route::get('project-hours', 'ProjectController@projectHours');
+        
     });
 });

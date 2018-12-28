@@ -18,6 +18,10 @@ class Project extends Model
         return $this->belongsToMany('App\Group', 'group_projects');
     }
 
+    public function sections(){
+        return $this->hasMany('App\Section');
+    }
+
     
 
     

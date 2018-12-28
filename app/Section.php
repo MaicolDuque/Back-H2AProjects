@@ -11,4 +11,9 @@ class Section extends Model
     public function tasks(){
         return $this->hasMany('App\Task');
     }
+
+    public function project(){
+        //return "aca";
+        return $this->belongsTo('App\Project');
+    }
 }

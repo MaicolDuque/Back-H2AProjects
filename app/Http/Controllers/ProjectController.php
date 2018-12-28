@@ -24,6 +24,38 @@ class ProjectController extends Controller
         return $projects;
     }
 
+
+    public function projectHours(){
+        // $projects = Project::all();
+        
+        // foreach ($projects as $project) {
+        //     // $project->sections; 
+        //     // $project->name;
+        //     foreach ($project->sections as $section) {
+        //         $section->tasks;
+        //     }      
+        // }
+
+        
+        $projects = Project::leftJoin('sections', 'projects.id', '=', 'sections.project_id')
+        ->leftJoin('tasks', 'tasks.section_id', '=', 'sections.id')        
+        ->select('projects.id as idProject', 'projects.name as project') 
+        ->selectRaw('sum(tasks.duration) as cant')       
+        ->groupBy('projects.id')
+        // ->where('usuarios.id', '=', 3)
+        ->get();
+        
+
+        // SELECT p.name, s.name, SUM(t.duration)
+        // FROM projects p 
+        // INNER JOIN sections as s 
+        // ON (p.id = s.project_id)
+        // INNER JOIN tasks t 
+        // ON (t.section_id = s.id)
+        // GROUP BY p.id
+        return $projects;
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -17,6 +17,20 @@ class TaskController extends Controller
         return Task::all();
     }
 
+
+
+    public function tasksGroup($idGrupo){ //Retonar las tareas con sus repectivos grupos
+        $tasks = Task::leftJoin('sections', 'tasks.section_id', '=', 'sections.id')
+        ->leftJoin('projects', 'sections.project_id', '=', 'projects.id') 
+        ->leftJoin('group_projects', 'projects.id', '=', 'group_projects.project_id')                
+        ->select('tasks.id as id','tasks.name as task','tasks.state_id', 'group_projects.group_id as grupo')              
+        // ->groupBy('projects.id')
+        ->where('group_projects.group_id', '=', $idGrupo)
+        ->get();
+
+        return $tasks;
+    }
+
    
     /**
      * Store a newly created resource in storage.

@@ -26,7 +26,7 @@ class SectionController extends Controller
      */
 
      public function returnSectionsProject($id){
-        $sections = Section::where('project_id', $id)->get();
+        $sections = Section::where('project_id', $id)->orderBy('order', 'ASC')->get();
 
         foreach ($sections as $section){
             $section->tasks;
