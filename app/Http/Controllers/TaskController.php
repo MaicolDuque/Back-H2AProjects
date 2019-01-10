@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use App\User;
+use App\Mail\EmailController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
 {
@@ -40,6 +43,20 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+
+       //Recuperar infromación del usuario al que se le asignó la tarea
+       $infoUser = User::findOrFail($request->user_id);        
+                
+       $data = array(
+           'user' => $infoUser,
+           'task' => $request->all()
+       );
+
+               
+       // Enviar correo al usuario
+       Mail::to($infoUser->email)->send(new EmailController($data));
+
+
         $task = Task::create($request->all());
 
         return response()->json($task, 201);
@@ -67,7 +84,26 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         // return $request;
-        // $request->except('picture')        
+        // $request->except('picture')   
+
+        //Recuperar infromación del usuario al que se le asignó la tarea
+        $infoUser = User::findOrFail($request->user_id);        
+                
+        $data = array(
+            'user' => $infoUser,
+            'task' => $request->all()
+        );
+
+                
+        // Enviar correo al usuario
+        Mail::to($infoUser->email)->send(new EmailController($data));
+
+        // Mail::send('emails.tareas', $data, function ($message){
+        //     $message->subject('Aqui va el mensaje del asunto del email ');
+        //     $message->to($infoUser->emai);
+        // });
+
+
         $task->update($request->all());
 
         return response()->json($task, 200);
