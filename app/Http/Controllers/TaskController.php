@@ -82,21 +82,21 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Task $task)
-    {
-        // return $request;
-        // $request->except('picture')   
+    {        
 
         //Recuperar infromación del usuario al que se le asignó la tarea
         $infoUser = User::findOrFail($request->user_id);        
                 
-        $data = array(
-            'user' => $infoUser,
-            'task' => $request->all()
-        );
+        //Validar que el usuario sea diferente al que tiene en el momento la tarea
+        if($infoUser->id != $request->user_id){
+            $data = array(
+                'user' => $infoUser,
+                'task' => $request->all()
+            );
+            // Enviar correo al usuario
+            Mail::to($infoUser->email)->send(new EmailController($data));
 
-                
-        // Enviar correo al usuario
-        Mail::to($infoUser->email)->send(new EmailController($data));
+        }      
 
         // Mail::send('emails.tareas', $data, function ($message){
         //     $message->subject('Aqui va el mensaje del asunto del email ');
